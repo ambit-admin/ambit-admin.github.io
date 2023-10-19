@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 30px;">
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px;">
+            <div style="display: flex"><div style="margin-right: 5px;">Avatar</div><input id="avatar" value="1" size="2"></div>
+            <div style="display: flex"><div style="margin-right: 5px;">Vision</div><input id="vision" value="1" size="2"></div>
+            <div style="display: flex"><div style="margin-right: 5px;">Product</div><input id="product" value="1" size="2"></div>
+            <div style="display: flex"><div style="margin-right: 5px;">Conversion</div><input id="conversion" value="1" size="2"></div>
+            <div style="display: flex"><div style="margin-right: 5px;">Traffic</div><input id="traffic" value="1" size="2"></div>
+        </div>
+        <div>
+
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
+                const ctx = document.getElementById('myChart');
+
+                const avatar = document.querySelector("#avatar");
+                const vision = document.querySelector("#vision");
+                const product = document.querySelector("#product");
+                const conversion = document.querySelector("#conversion");
+                const traffic = document.querySelector("#traffic");
+
+                let avatarValue = 1;
+                let visionValue = 1;
+                let productValue = 1;
+                let conversionValue = 1;
+                let trafficValue = 1;
+
+                function updateChart(chart, label, newData) {
+                    if (label == "Avatar")
+                        chart.data.datasets[0].data[0] = Number(newData);
+                    else if (label == "Vision")
+                        chart.data.datasets[0].data[1] = Number(newData);
+                    else if (label == "Product")
+                        chart.data.datasets[0].data[2] = Number(newData);
+                    else if (label == "Conversion")
+                        chart.data.datasets[0].data[3] = Number(newData);
+                    else if (label == "Traffic")
+                        chart.data.datasets[0].data[4] = Number(newData);
+
+                    chart.update();
+
+                    score = document.querySelector('#score');
+                    console.log(chart.data.datasets[0].data);
+                    score.textContent = chart.data.datasets[0].data.reduce((a, b) => a + b) / chart.data.datasets[0].data.length;
+                }
+
+                const chart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Avatar', 'Vision', 'Product', 'Conversion', 'Traffic'],
+                        datasets: [{
+                            label: 'Ambit Assessment',
+                            data: [1, 2, 1, 1, 1],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    display: false
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 5
+                            }
+                        }
+                    }
+                });
+
+                avatar.addEventListener("change", (event) => { updateChart(chart, "Avatar", event.target.value) });
+                vision.addEventListener("change", (event) => { updateChart(chart, "Vision", event.target.value) });
+                product.addEventListener("change", (event) => { updateChart(chart, "Product", event.target.value) });
+                conversion.addEventListener("change", (event) => { updateChart(chart, "Conversion", event.target.value) });
+                traffic.addEventListener("change", (event) => { updateChart(chart, "Traffic", event.target.value) });
+
+            </script>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <div>Score</div>
+            <div id="score">1</div>
+        </div>
+    </div>
+</body>
+
+</html>
