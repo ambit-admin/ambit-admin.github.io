@@ -2,99 +2,131 @@
 <html>
 
 <head>
-
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div style="display: flex; justify-content: center; align-items: center; gap: 30px;">
-        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px;">
-            <div style="display: flex"><div style="margin-right: 5px;">Avatar</div><input id="avatar" value="1" size="2"></div>
-            <div style="display: flex"><div style="margin-right: 5px;">Vision</div><input id="vision" value="1" size="2"></div>
-            <div style="display: flex"><div style="margin-right: 5px;">Product</div><input id="product" value="1" size="2"></div>
-            <div style="display: flex"><div style="margin-right: 5px;">Conversion</div><input id="conversion" value="1" size="2"></div>
-            <div style="display: flex"><div style="margin-right: 5px;">Traffic</div><input id="traffic" value="1" size="2"></div>
-        </div>
-        <div>
+    <div id="appContainer">
+        <div id="app">
+            <div id="topRow">
+                <div id="control">
+                    <div class="label">
+                        <div class="field">Avatar</div><input class="input" id="avatar" value="1" size="2" pattern="[0-9]{,1}">
+                    </div>
+                    <div class="label">
+                        <div class="field">Vision</div><input class="input" id="vision" value="1" size="2" pattern="[0-9]{,1}">
+                    </div>
+                    <div class="label">
+                        <div class="field">Product</div><input class="input" id="product" value="1" size="2" pattern="[0-9]{,1}">
+                    </div>
+                    <div class="label">
+                        <div class="field">Conversion</div><input class="input" id="conversion" value="1" size="2" pattern="[0-9]{,1}">
+                    </div>
+                    <div class="label">
+                        <div class="field">Traffic</div><input class="input" id="traffic" value="1" size="2" pattern="[0-9]{,1}">
+                    </div>
+                </div>
+                <div id="chart">
 
-            <div>
-                <canvas id="myChart"></canvas>
-            </div>
+                    <div>
+                        <canvas id="myChart"></canvas>
+                    </div>
 
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            <script>
-                const ctx = document.getElementById('myChart');
+                    <script>
+                        const ctx = document.getElementById('myChart');
 
-                const avatar = document.querySelector("#avatar");
-                const vision = document.querySelector("#vision");
-                const product = document.querySelector("#product");
-                const conversion = document.querySelector("#conversion");
-                const traffic = document.querySelector("#traffic");
+                        const avatar = document.querySelector("#avatar");
+                        const vision = document.querySelector("#vision");
+                        const product = document.querySelector("#product");
+                        const conversion = document.querySelector("#conversion");
+                        const traffic = document.querySelector("#traffic");
 
-                let avatarValue = 1;
-                let visionValue = 1;
-                let productValue = 1;
-                let conversionValue = 1;
-                let trafficValue = 1;
+                        let avatarValue = 1;
+                        let visionValue = 1;
+                        let productValue = 1;
+                        let conversionValue = 1;
+                        let trafficValue = 1;
 
-                function updateChart(chart, label, newData) {
-                    if (label == "Avatar")
-                        chart.data.datasets[0].data[0] = Number(newData);
-                    else if (label == "Vision")
-                        chart.data.datasets[0].data[1] = Number(newData);
-                    else if (label == "Product")
-                        chart.data.datasets[0].data[2] = Number(newData);
-                    else if (label == "Conversion")
-                        chart.data.datasets[0].data[3] = Number(newData);
-                    else if (label == "Traffic")
-                        chart.data.datasets[0].data[4] = Number(newData);
+                        function updateChart(chart, label, newData) {
+                            if (label == "Avatar")
+                                chart.data.datasets[0].data[0] = Number(newData);
+                            else if (label == "Vision")
+                                chart.data.datasets[0].data[1] = Number(newData);
+                            else if (label == "Product")
+                                chart.data.datasets[0].data[2] = Number(newData);
+                            else if (label == "Conversion")
+                                chart.data.datasets[0].data[3] = Number(newData);
+                            else if (label == "Traffic")
+                                chart.data.datasets[0].data[4] = Number(newData);
 
-                    chart.update();
+                            chart.update();
 
-                    score = document.querySelector('#score');
-                    console.log(chart.data.datasets[0].data);
-                    score.textContent = chart.data.datasets[0].data.reduce((a, b) => a + b) / chart.data.datasets[0].data.length;
-                }
+                            score = document.querySelector('#score');
 
-                const chart = new Chart(ctx, {
-                    type: 'radar',
-                    data: {
-                        labels: ['Avatar', 'Vision', 'Product', 'Conversion', 'Traffic'],
-                        datasets: [{
-                            label: 'Ambit Assessment',
-                            data: [1, 1, 1, 1, 1],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        scales: {
-                            r: {
-                                angleLines: {
-                                    display: false
-                                },
-                                suggestedMin: 0,
-                                suggestedMax: 5
-                            }
+                            score.textContent = chart.data.datasets[0].data.reduce((a, b) => a + b) / chart.data.datasets[0].data.length;
                         }
-                    }
-                });
+                        Chart.defaults.font.family = 'Montserrat';
+                        const chart = new Chart(ctx, {
+                            type: 'radar',
+                            data: {
+                                labels: ['Avatar', 'Vision', 'Product', 'Conversion', 'Traffic'],
+                                datasets: [{
+                                    label: 'Ambit Assessment',
+                                    data: [1, 1, 1, 1, 1],
+                                    borderWidth: 2,
+                                    borderColor: '#3C2AF5AA',
+                                    backgroundColor: '#3C2AF555',
+                                }]
+                            },
+                            options: {
+                                tension: 0,
+                                elements: {
+                                    point: {
+                                        pointRadius: 0
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
+                                },
+                                scales: {
+                                    r: {
+                                        grid: {
+                                            circular: true
+                                        },
+                                        angleLines: {
+                                            display: false
+                                        },
+                                        suggestedMin: 0,
+                                        suggestedMax: 5,
+                                        ticks: {
+                                            stepSize: 1
+                                        }
+                                    }
+                                }
+                            }
+                        });
 
-                avatar.addEventListener("change", (event) => { updateChart(chart, "Avatar", event.target.value) });
-                vision.addEventListener("change", (event) => { updateChart(chart, "Vision", event.target.value) });
-                product.addEventListener("change", (event) => { updateChart(chart, "Product", event.target.value) });
-                conversion.addEventListener("change", (event) => { updateChart(chart, "Conversion", event.target.value) });
-                traffic.addEventListener("change", (event) => { updateChart(chart, "Traffic", event.target.value) });
 
-            </script>
-        </div>
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <div>Score</div>
-            <div id="score">1</div>
+                        avatar.addEventListener("change", (event) => { updateChart(chart, "Avatar", event.target.value) });
+                        vision.addEventListener("change", (event) => { updateChart(chart, "Vision", event.target.value) });
+                        product.addEventListener("change", (event) => { updateChart(chart, "Product", event.target.value) });
+                        conversion.addEventListener("change", (event) => { updateChart(chart, "Conversion", event.target.value) });
+                        traffic.addEventListener("change", (event) => { updateChart(chart, "Traffic", event.target.value) });
+
+                    </script>
+                </div>
+            </div>
+            <div id="scoreContainer">
+                <div>Score</div>
+                <div id="score">1</div>
+            </div>
         </div>
     </div>
 </body>
